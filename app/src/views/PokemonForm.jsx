@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import PokemonCard from './PokemonCard';
+import PokemonCard from '../components/PokemonCard';
 
 function PokemonForm() {
   const [pokemon, setPokemon] = useState({
@@ -12,8 +12,8 @@ function PokemonForm() {
   });
 
   useEffect(() => {
-    fetchPokemonData()
-  },[pokemon.search])
+    // fetchPokemonData();
+  }, [pokemon.search]);
 
   const fetchPokemonData = async () => {
     const response = await fetch(
@@ -27,12 +27,12 @@ function PokemonForm() {
       name: data.name,
       image: data.sprites.front_default,
     });
-  }
+  };
 
   // form submission helper function
   const handleSubmit = async (event) => {
     event.preventDefault();
-    fetchPokemonData()
+    fetchPokemonData();
   };
 
   return (
@@ -43,7 +43,9 @@ function PokemonForm() {
           <Form.Control
             type="text"
             placeholder="Enter Pokemon"
-            onChange={(event) => setPokemon({...pokemon, search: event.target.value})}
+            onChange={(event) =>
+              setPokemon({ ...pokemon, search: event.target.value })
+            }
           />
         </Form.Group>
         <Button variant="primary" type="submit">
@@ -52,9 +54,7 @@ function PokemonForm() {
       </Form>
       {/* logical add operator for true conditonals only = && */}
       {/* ternary operator for if or else conditionals = ? : */}
-      {pokemon.name && (
-        <PokemonCard pokemon={pokemon} />
-      )}
+      {pokemon.name && <PokemonCard pokemon={pokemon} />}
     </>
   );
 }
